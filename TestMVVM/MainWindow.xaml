@@ -1,0 +1,140 @@
+﻿<Window x:Class="TestMVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ie="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"        
+       
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="600">
+    <Window.Resources>   
+        <Style x:Key="RBLBStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Margin" Value="2, 2, 2, 0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Border Background="Transparent">
+                                    <RadioButton Content="{TemplateBinding ContentPresenter.Content}" VerticalAlignment="Center"
+                                                 IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>        
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="90"/>            
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="90"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region FoodEntry Stuff-->
+        <ListBox  Grid.Row="4" Grid.Column="0" Name="ls0" Width="110"
+                  ItemsSource="{Binding FoodEntryList}" SelectedValue="{Binding SelectedFoodEntryListItem}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock  Grid.Column="0" Text="{Binding Description}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>            
+        </ListBox>
+        <ListBox Grid.Row="4" Grid.Column="2" Name="ls3"
+                 ItemsSource="{Binding SelectedFoodEntryListItem.FoodEntry_TagList}"
+                 SelectedValue="{Binding SelectedFoodEntry_TagListItem}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBox  Grid.Row="1" Grid.Column="0" Text=       "{Binding NewEntryDescription,  UpdateSourceTrigger=PropertyChanged}"/>
+        <CheckBox Grid.Row="2" Grid.Column="0" IsChecked=  "{Binding NewEntryIsFeelingGoodBad}"   Content="Good or Bad" Width="90" IsThreeState="True"/>
+        <Button   Grid.Row="3" Grid.Column="0" Command=    "{Binding AddNewFoodEntryCommand}"     Content="Add Entry"    Height="23"/>
+        <Button   Grid.Row="5" Grid.Column="0" Command=    "{Binding DeleteFoodEntryCommand}"     Content="Delete Entry" Height="23"/>
+
+        <Button   Grid.Row="4" Grid.Column="1" Command=    "{Binding AddFoodEntry_TagCommand}"    Content="Add Tag"      Height="23" Margin="0,28,0,60"/>
+        <Button   Grid.Row="4" Grid.Column="1" Command=    "{Binding DeleteFoodEntry_TagCommand}" Content="Remove Tag"   Height="23" Margin="0,68,0,20"/>
+        <!--#endregion Food Entry Stuff-->
+
+        <!--#region Tag Stuff-->
+
+        <ListBox  Grid.Row="4" Grid.Column="4" Name="ls1" Width="200" 
+                  ItemsSource="{Binding TagList}" SelectedValue="{Binding SelectedTagListItem}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock  Grid.Column="0" Text="{Binding Name}"/>
+                        <!-- RadioButton  Grid.Column="1" GroupName="RadioButtonColumn" Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"                                      
+                                      Height="15" Width="15">
+                            <ie:Interaction.Triggers>
+                                <ie:EventTrigger EventName = "Click" >
+                                    <ie:InvokeCommandAction Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"/>
+
+                                </ie:EventTrigger>
+                            </ie:Interaction.Triggers>
+                        </RadioButton>-->
+
+
+                        <!--ListBox ItemsSource="{Binding AvailableValues}" 
+                                 SelectedValue="{Binding SelectedValue}"
+                                 Style="{StaticResource RBLBStyle}"
+                        Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"
+                                 IsChecked="{Binding ElementName=ls1, Path=DataContext.IsRBChecked, Mode=}"
+                                 Height="15" Width="15"/-->
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <TextBox  Grid.Row="1" Grid.Column="4" Text=       "{Binding NewTagName,  UpdateSourceTrigger=PropertyChanged}"/>
+        <CheckBox Grid.Row="2" Grid.Column="4" IsChecked=  "{Binding NewTagIsFeelingGoodBad}" Content="Good or Bad" Width="90" IsThreeState="True"/>
+        <Button   Grid.Row="3" Grid.Column="4" Command=    "{Binding AddNewTagCommand}"      Content="Add Tag"    Height="23"/>
+        <Button   Grid.Row="5" Grid.Column="4" Command=    "{Binding DeleteTagCommand}"      Content="Delete Tag" Height="23"/>
+                                                                                             
+        <Button   Grid.Row="4" Grid.Column="5" Command=    "{Binding StoreTagCommand}"       Content="Store Tag"  Height="23" Margin="0,28,0,60"/>
+        <Button   Grid.Row="4" Grid.Column="5" Command=    "{Binding ClearStoredTagCommand}" Content="Clear Tag"  Height="23" Margin="0,68,0,20"/>
+        
+        <!--#endregion Tag Stuff-->
+        
+        
+        
+    </Grid>
+</Window>
