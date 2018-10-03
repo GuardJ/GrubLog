@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ie="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"        
-       
+        xmlns:ie="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:views="clr-namespace:TestMVVM.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="600">
     <Window.Resources>   
@@ -31,7 +31,16 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+
+    <TabControl>
+        <TabItem Header="Tags">
+            <views:TagView DataContext="{Binding TagViewModel}"></views:TagView>
+        </TabItem>
+        <TabItem Header="Entries">
+            <!--Inssert Entrie vView here-->
+        </TabItem>
+    </TabControl>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="23"/>
             <RowDefinition Height="23"/>
@@ -49,7 +58,7 @@
             <ColumnDefinition Width="90"/>
         </Grid.ColumnDefinitions>
 
-        <!--#region FoodEntry Stuff-->
+        --><!--#region FoodEntry Stuff--><!--
         <ListBox  Grid.Row="4" Grid.Column="0" Name="ls0" Width="110"
                   ItemsSource="{Binding FoodEntryList}" SelectedValue="{Binding SelectedFoodEntryListItem}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -84,9 +93,9 @@
 
         <Button   Grid.Row="4" Grid.Column="1" Command=    "{Binding AddFoodEntry_TagCommand}"    Content="Add Tag"      Height="23" Margin="0,28,0,60"/>
         <Button   Grid.Row="4" Grid.Column="1" Command=    "{Binding DeleteFoodEntry_TagCommand}" Content="Remove Tag"   Height="23" Margin="0,68,0,20"/>
-        <!--#endregion Food Entry Stuff-->
+        --><!--#endregion Food Entry Stuff-->
 
-        <!--#region Tag Stuff-->
+        <!--#region Tag Stuff--><!--
 
         <ListBox  Grid.Row="4" Grid.Column="4" Name="ls1" Width="200" 
                   ItemsSource="{Binding TagList}" SelectedValue="{Binding SelectedTagListItem}"
@@ -101,7 +110,7 @@
 
 
                         <TextBlock  Grid.Column="0" Text="{Binding Name}"/>
-                        <!-- RadioButton  Grid.Column="1" GroupName="RadioButtonColumn" Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"                                      
+                        --><!-- RadioButton  Grid.Column="1" GroupName="RadioButtonColumn" Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"                                      
                                       Height="15" Width="15">
                             <ie:Interaction.Triggers>
                                 <ie:EventTrigger EventName = "Click" >
@@ -117,7 +126,7 @@
                                  Style="{StaticResource RBLBStyle}"
                         Command="{Binding ElementName=ls1, Path=DataContext.StoreTagCommand}"
                                  IsChecked="{Binding ElementName=ls1, Path=DataContext.IsRBChecked, Mode=}"
-                                 Height="15" Width="15"/-->
+                                 Height="15" Width="15"/--><!--
 
                     </Grid>
                 </DataTemplate>
@@ -132,9 +141,9 @@
         <Button   Grid.Row="4" Grid.Column="5" Command=    "{Binding StoreTagCommand}"       Content="Store Tag"  Height="23" Margin="0,28,0,60"/>
         <Button   Grid.Row="4" Grid.Column="5" Command=    "{Binding ClearStoredTagCommand}" Content="Clear Tag"  Height="23" Margin="0,68,0,20"/>
         
-        <!--#endregion Tag Stuff-->
+        --><!--#endregion Tag Stuff--><!--
         
         
         
-    </Grid>
+    </Grid>-->
 </Window>

@@ -18,14 +18,16 @@ namespace TestMVVM.ViewModel
         //    </ie:EventTrigger>
         //</ie:Interaction.Triggers>
 
+        private TagViewModel _tagViewModel;
+        public TagViewModel TagViewModel
+        {
+            get { return _tagViewModel; }
+            set { _tagViewModel = value; }
+        }
+
         public MainWindowVM()
         {           
-            AddNewTagCommand = new RelayCommand(AddNewTag);
-            DeleteTagCommand = new RelayCommand(DeleteTag);
-            StoreTagCommand = new RelayCommand(StoreTag);
-            ClearStoredTagCommand = new RelayCommand(ClearStoredTag);
-            TagList = new ObservableCollection<Tag>();
-
+            TagViewModel = new TagViewModel();
             AddNewFoodEntryCommand = new RelayCommand(AddNewFoodEntry);
             DeleteFoodEntryCommand = new RelayCommand(DeleteFoodEntry);
             FoodEntryList = new ObservableCollection<FoodEntry>();
@@ -37,10 +39,7 @@ namespace TestMVVM.ViewModel
         }
 
         //======================
-        public RelayCommand AddNewTagCommand { get; set; }
-        public RelayCommand DeleteTagCommand { get; set; }
-        public RelayCommand StoreTagCommand { get; set; }
-        public RelayCommand ClearStoredTagCommand { get; set; }
+
 
         public RelayCommand AddNewFoodEntryCommand { get; set; }
         public RelayCommand DeleteFoodEntryCommand { get; set; }
@@ -69,7 +68,10 @@ namespace TestMVVM.ViewModel
                     Row1.Field<bool?>("IsFeelingGoodBad")
                     );
 
-                TagList.Add(tag);
+                if (tag.ParentCategoryID == null)
+                    TagViewModel.CategoryTagList.Add(tag);
+                else
+                    TagViewModel.SubcategoryTagList.Add(tag);
             }
 
             DataTable dt2 = dbClass.Execute_Proc("dbo.GetFoodEntrys");
@@ -88,7 +90,7 @@ namespace TestMVVM.ViewModel
                 foreach (DataRow Row3 in dt3.Rows)
                 {
                     int TagID = Row3.Field<int>("TagID");
-                    Tag foundTag = TagList.Where(tag => TagID == tag.TagID).FirstOrDefault();
+                    Tag foundTag = TagViewModel.SubcategoryTagList.Where(tag => TagID == tag.TagID).FirstOrDefault();
                     foodEntry.FoodEntry_TagList.Add(foundTag);
                 }
 

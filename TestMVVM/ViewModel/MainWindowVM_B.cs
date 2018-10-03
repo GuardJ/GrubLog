@@ -48,7 +48,7 @@ namespace TestMVVM.ViewModel
         {
             FoodEntry currentFoodEntry = FoodEntryList.Where(tag => SelectedFoodEntryListItem.FoodEntryID.Value == tag.FoodEntryID).FirstOrDefault();
 
-            Tag currentTag = TagList.Where(tag => SelectedTagListItem.TagID.Value == tag.TagID).FirstOrDefault();
+            Tag currentTag = TagViewModel.SubcategoryTagList.Where(tag => TagViewModel.SelectedTagListItem.TagID.Value == tag.TagID).FirstOrDefault();
 
             dbClass.InsertFoodEntry_TagToDB((int)currentFoodEntry.FoodEntryID, (int)currentTag.TagID.Value);
 
@@ -59,7 +59,7 @@ namespace TestMVVM.ViewModel
         {
             FoodEntry currentFoodEntry = FoodEntryList.Where(tag => SelectedFoodEntryListItem.FoodEntryID.Value == tag.FoodEntryID).FirstOrDefault();
 
-            Tag currentTag = TagList.Where(tag => SelectedFoodEntry_TagListItem.TagID.Value == tag.TagID).FirstOrDefault();
+            Tag currentTag = TagViewModel.SubcategoryTagList.Where(tag => SelectedFoodEntry_TagListItem.TagID.Value == tag.TagID).FirstOrDefault();
 
             dbClass.DeleteFoodEntry_TagFromDB_AtTagID((int)currentFoodEntry.FoodEntryID.Value, (int)currentTag.TagID.Value);
 
