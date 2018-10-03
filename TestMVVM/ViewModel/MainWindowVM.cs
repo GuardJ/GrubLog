@@ -11,6 +11,7 @@ namespace TestMVVM.ViewModel
 {
     public partial class MainWindowVM : INotifyPropertyChanged
     {
+        //hi
         //for any xaml control use control event to invoke a relay command
         //<ie:Interaction.Triggers>
         //    <ie:EventTrigger EventName = "SelectionChanged" >
