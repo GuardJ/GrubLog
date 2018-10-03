@@ -7,6 +7,47 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <ListBox  Grid.Row="4" Grid.Column="0" Name="ls0" Width="auto" Grid.ColumnSpan="2"
+                  ItemsSource="{Binding FoodEntryList}" SelectedValue="{Binding SelectedFoodEntryListItem}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock  Grid.Column="0" Text="{Binding Description}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--TextBox  Grid.Row="1" Grid.Column="0" Text=       "{Binding NewEntryDescription,  UpdateSourceTrigger=PropertyChanged}"/>
+        <CheckBox Grid.Row="2" Grid.Column="0" IsChecked=  "{Binding NewEntryIsFeelingGoodBad}"   Content="Good or Bad" Width="90" IsThreeState="True"/-->
+        <Button   Grid.Row="5" Grid.Column="0" Command=    "{Binding AddNewFoodEntryCommand}"     Content="Add Entry"    Height="23"/>
+        <Button   Grid.Row="5" Grid.Column="1" Command=    "{Binding DeleteFoodEntryCommand}"     Content="Delete Entry" Height="23"/>
+
+        <!--<Button   Grid.Row="4" Grid.Column="2" Command=    "{Binding AddFoodEntry_TagCommand}"    Content="Add Tag"      Height="23" Margin="0,28,0,60"/>
+        <Button   Grid.Row="4" Grid.Column="2" Command=    "{Binding DeleteFoodEntry_TagCommand}" Content="Remove Tag"   Height="23" Margin="0,68,0,20"/>-->
+        <!--<Label    Grid.Row="2" Grid.Column="3" Content="{Binding FoodEntryList.DateTime}"/>-->
+        <TextBox  Grid.Row="3" Grid.Column="3" Text=       "{Binding SelectedFoodEntryListItem.Description,  UpdateSourceTrigger=PropertyChanged}"
+                  Grid.ColumnSpan="2" Grid.RowSpan="2" Width="200"/>
+        <Label    Grid.Row="1" Grid.Column="3" Content="{Binding SelectedFoodEntryListItem.DateTime}"/>
+        <CheckBox Grid.Row="2" Grid.Column="3" Content="{Binding SelectedFoodEntryListItem.IsFeelingGoodBad}"/>
     </Grid>
 </UserControl>

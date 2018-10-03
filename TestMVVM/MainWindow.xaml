@@ -37,7 +37,7 @@
             <views:TagView DataContext="{Binding TagViewModel}"></views:TagView>
         </TabItem>
         <TabItem Header="Entries">
-            <!--Inssert Entrie vView here-->
+            <views:EntryView DataContext="{Binding EntryViewModel}"></views:EntryView>
         </TabItem>
     </TabControl>
     <!--<Grid>

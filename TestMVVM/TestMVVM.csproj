@@ -89,7 +89,7 @@
     <Compile Include="ClassStuff.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\TagViewModel.cs" />
-    <Compile Include="ViewModel\MainWindowVM_B.cs" />
+    <Compile Include="ViewModel\EntryViewModel.cs" />
     <Compile Include="Views\EntryView.xaml.cs">
       <DependentUpon>EntryView.xaml</DependentUpon>
     </Compile>

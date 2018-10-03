@@ -11,7 +11,6 @@ namespace TestMVVM.ViewModel
 {
     public partial class MainWindowVM : INotifyPropertyChanged
     {
-        //hi again
         //for any xaml control use control event to invoke a relay command
         //<ie:Interaction.Triggers>
         //    <ie:EventTrigger EventName = "SelectionChanged" >
@@ -26,33 +25,22 @@ namespace TestMVVM.ViewModel
             set { _tagViewModel = value; }
         }
 
+        private EntryViewModel _entryViewModel;
+        public EntryViewModel EntryViewModel
+        {
+            get { return _entryViewModel; }
+            set { _entryViewModel = value; }
+        }
+
+
         public MainWindowVM()
         {           
             TagViewModel = new TagViewModel();
-            AddNewFoodEntryCommand = new RelayCommand(AddNewFoodEntry);
-            DeleteFoodEntryCommand = new RelayCommand(DeleteFoodEntry);
-            FoodEntryList = new ObservableCollection<FoodEntry>();
-
-            AddFoodEntry_TagCommand = new RelayCommand(AddFoodEntry_Tag);
-            DeleteFoodEntry_TagCommand = new RelayCommand(DeleteFoodEntry_Tag);
+            EntryViewModel = new EntryViewModel();
 
             LoadData();
         }
 
-        //======================
-
-
-        public RelayCommand AddNewFoodEntryCommand { get; set; }
-        public RelayCommand DeleteFoodEntryCommand { get; set; }
-
-        public RelayCommand AddFoodEntry_TagCommand { get; set; }
-        public RelayCommand DeleteFoodEntry_TagCommand { get; set; }
-
-        public RelayCommand SelectedGlobalTagCommand1 { get; set; }
-        public RelayCommand SelectedGlobalTagCommand2 { get; set; }
-
-        public RelayCommand ParentTagNameCommand1 { get; set; }
-        public RelayCommand ParentTagNameCommand2 { get; set; }
         //======================
         private void LoadData()
         {
@@ -95,7 +83,7 @@ namespace TestMVVM.ViewModel
                     foodEntry.FoodEntry_TagList.Add(foundTag);
                 }
 
-                FoodEntryList.Add(foodEntry);
+                EntryViewModel.FoodEntryList.Add(foodEntry);
             }
         }
 

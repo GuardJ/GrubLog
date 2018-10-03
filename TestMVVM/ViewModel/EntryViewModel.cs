@@ -9,11 +9,37 @@ using System.Linq;
 
 namespace TestMVVM.ViewModel
 {
-    public partial class MainWindowVM : INotifyPropertyChanged
+    public class EntryViewModel : INotifyPropertyChanged
     {
-        #region FoodEntrys and FoodEntry Logic
-
+        #region FoodEntrys and FoodEntry Logic  
         
+        private ObservableCollection<FoodEntry> _FoodEntryList;
+        public ObservableCollection<FoodEntry> FoodEntryList
+        {
+            get { return _FoodEntryList; }
+            set
+            {
+                _FoodEntryList = value;
+                OnPropertyChanged("FoodEntryList");
+            }
+        }
+
+        public RelayCommand AddNewFoodEntryCommand { get; set; }
+        public RelayCommand DeleteFoodEntryCommand { get; set; }
+
+        public RelayCommand AddFoodEntry_TagCommand { get; set; }
+        public RelayCommand DeleteFoodEntry_TagCommand { get; set; }
+
+        public EntryViewModel()
+        {
+            FoodEntryList = new ObservableCollection<FoodEntry>();
+
+            AddNewFoodEntryCommand = new RelayCommand(AddNewFoodEntry);
+            DeleteFoodEntryCommand = new RelayCommand(DeleteFoodEntry);            
+
+            AddFoodEntry_TagCommand = new RelayCommand(AddFoodEntry_Tag);
+            DeleteFoodEntry_TagCommand = new RelayCommand(DeleteFoodEntry_Tag);
+        }        
 
         #region FoodEntry Commands
 
@@ -48,7 +74,7 @@ namespace TestMVVM.ViewModel
         {
             FoodEntry currentFoodEntry = FoodEntryList.Where(tag => SelectedFoodEntryListItem.FoodEntryID.Value == tag.FoodEntryID).FirstOrDefault();
 
-            Tag currentTag = TagViewModel.SubcategoryTagList.Where(tag => TagViewModel.SelectedTagListItem.TagID.Value == tag.TagID).FirstOrDefault();
+            Tag currentTag = null;//TagViewModel.SubcategoryTagList.Where(tag => TagViewModel.SelectedTagListItem.TagID.Value == tag.TagID).FirstOrDefault();
 
             dbClass.InsertFoodEntry_TagToDB((int)currentFoodEntry.FoodEntryID, (int)currentTag.TagID.Value);
 
@@ -59,7 +85,7 @@ namespace TestMVVM.ViewModel
         {
             FoodEntry currentFoodEntry = FoodEntryList.Where(tag => SelectedFoodEntryListItem.FoodEntryID.Value == tag.FoodEntryID).FirstOrDefault();
 
-            Tag currentTag = TagViewModel.SubcategoryTagList.Where(tag => SelectedFoodEntry_TagListItem.TagID.Value == tag.TagID).FirstOrDefault();
+            Tag currentTag = null; // TagViewModel.SubcategoryTagList.Where(tag => SelectedFoodEntry_TagListItem.TagID.Value == tag.TagID).FirstOrDefault();
 
             dbClass.DeleteFoodEntry_TagFromDB_AtTagID((int)currentFoodEntry.FoodEntryID.Value, (int)currentTag.TagID.Value);
 
@@ -87,7 +113,7 @@ namespace TestMVVM.ViewModel
             get { return _SelectedFoodEntryListItem; }
             set
             {
-                _SelectedFoodEntryListItem = value;
+                _SelectedFoodEntryListItem = value;                
                 OnPropertyChanged("SelectedFoodEntryListItem");
             }
         }
@@ -119,18 +145,18 @@ namespace TestMVVM.ViewModel
 
         #endregion //Props
 
-        //======================
-        private ObservableCollection<FoodEntry> _FoodEntryList;
-        public ObservableCollection<FoodEntry> FoodEntryList
-        {
-            get { return _FoodEntryList; }
-            set
-            {
-                _FoodEntryList = value;
-                OnPropertyChanged("FoodEntryList");
-            }
-        }
+        
 
         #endregion //FoodEntrys and FoodEntry Logic
+
+        #region NotifyPropertyChanged
+        //========================================================
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        #endregion
+
     }
 }
